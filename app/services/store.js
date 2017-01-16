@@ -20,7 +20,22 @@ const orders = [
 export default Ember.Service.extend({
   getOrderById(id) { return orders.findBy('id', id); },
   getOrders() { return orders; },
-  getProducts(){ return products; }
+  getProducts(){ return products; },
+
+  newOrder() {
+    return Order.create({
+      items: products.map((product) => {
+        return LineItem.create({
+          product: product
+        });
+      })
+    });
+  },
+
+  saveOrder(order) {
+    order.set('id', 9999);
+    orders.pushObject(order);
+  }
 });
 
 
